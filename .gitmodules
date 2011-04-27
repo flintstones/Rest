@@ -1,0 +1,9 @@
+[submodule "vendor/FOS/RestBundle"]
+	path = vendor/FOS/RestBundle
+	url = https://github.com/FriendsOfSymfony/RestBundle
+[submodule "vendor/Symfony/Component/Serializer"]
+	path = vendor/Symfony/Component/Serializer
+	url = https://github.com/symfony/Serializer
+[submodule "vendor/silex"]
+	path = vendor/silex
+	url = https://github.com/fabpot/Silex
