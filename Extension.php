@@ -40,7 +40,7 @@ class Extension implements ExtensionInterface
             $app['autoloader']->registerNamespace('Symfony\Component\Serializer', $app['rest.serializer.class_path']);
         }
 
-        $listener = new RequestListener(array('html' => 1, 'json' => 0.75, 'xml' => 0.5), 'html', true);
+        $listener = new RequestListener(array('json' => 0.75, 'xml' => 0.5), 'html', true);
         $listener->setSerializer($app['rest.serializer']);
         $app['dispatcher']->addListener(HttpKernelEvents::onCoreRequest, $listener, 10);
     }
