@@ -17,7 +17,7 @@ use FOS\RestBundle\Controller\ControllerListener;
 use Silex\Application;
 use Silex\ExtensionInterface;
 
-use Symfony\Component\HttpKernel\Events as HttpKernelEvents;
+use Symfony\Component\HttpKernel\CoreEvents as HttpKernelEvents;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -46,11 +46,11 @@ class Extension implements ExtensionInterface
         }
 
         $listener = new RequestListener($app['rest.serializer']);
-        $app['dispatcher']->addListener(HttpKernelEvents::onCoreRequest, $listener);
+        $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, $listener);
 
-        $app['dispatcher']->addListener(HttpKernelEvents::onCoreRequest, function () use ($app) {
+        $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, function () use ($app) {
             $listener = new ControllerListener('html', $app['rest.priorities']);
-            $app['dispatcher']->addListener(HttpKernelEvents::onCoreController, $listener, 10);
+            $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, $listener, 10);
         });
     }
 }
