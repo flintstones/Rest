@@ -11,8 +11,8 @@
 
 namespace Flintstones\Rest;
 
-use FOS\RestBundle\Request\RequestListener;
-use FOS\RestBundle\Controller\ControllerListener;
+use FOS\RestBundle\EventListener\RequestListener;
+use FOS\RestBundle\EventListener\ControllerListener;
 
 use Silex\Application;
 use Silex\ExtensionInterface;
@@ -27,9 +27,11 @@ class Extension implements ExtensionInterface
     public function register(Application $app)
     {
         $app['rest.serializer'] = $app->share(function () {
-            $serializer = new Serializer();
-            $serializer->setEncoder('json', new JsonEncoder());
-            $serializer->setEncoder('xml', new XmlEncoder());
+            $encoders = array (
+                'json' => new JsonEncoder(),
+                'xml'  => new XmlEncoder()
+            );
+            $serializer = new Serializer(array(), $encoders);
             return $serializer;
         });
 
@@ -46,11 +48,11 @@ class Extension implements ExtensionInterface
         }
 
         $listener = new RequestListener($app['rest.serializer']);
-        $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, $listener);
+        $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, array($listener, 'onCoreRequest'));
 
         $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, function () use ($app) {
             $listener = new ControllerListener('html', $app['rest.priorities']);
-            $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, $listener, 10);
+            $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, array($listener, 'onCoreController'), 10);
         });
     }
 }
