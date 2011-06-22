@@ -48,11 +48,11 @@ class Extension implements ExtensionInterface
         }
 
         $listener = new RequestListener($app['rest.serializer']);
-        $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, array($listener, 'onCoreRequest'));
+        $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, array($listener, 'onKernelRequest'));
 
         $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, function () use ($app) {
             $listener = new ControllerListener('html', $app['rest.priorities']);
-            $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, array($listener, 'onCoreController'), 10);
+            $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, array($listener, 'onKernelController'), 10);
         });
     }
 }
