@@ -11,13 +11,13 @@
 
 namespace Flintstones\Rest;
 
-use FOS\RestBundle\EventListener\RequestListener;
-use FOS\RestBundle\EventListener\ControllerListener;
+use FOS\RestBundle\EventListener\BodyListener;
+use FOS\RestBundle\EventListener\FormatListener;
 
 use Silex\Application;
 use Silex\ExtensionInterface;
 
-use Symfony\Component\HttpKernel\CoreEvents as HttpKernelEvents;
+use Symfony\Component\HttpKernel\KernelEvents as HttpKernelEvents;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -47,11 +47,11 @@ class Extension implements ExtensionInterface
             $app['autoloader']->registerNamespace('Symfony\Component\Serializer', $app['rest.serializer.class_path']);
         }
 
-        $listener = new RequestListener($app['rest.serializer']);
+        $listener = new BodyListener($app['rest.serializer']);
         $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, array($listener, 'onKernelRequest'));
 
         $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, function () use ($app) {
-            $listener = new ControllerListener('html', $app['rest.priorities']);
+            $listener = new FormatListener('html', $app['rest.priorities']);
             $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, array($listener, 'onKernelController'), 10);
         });
     }
