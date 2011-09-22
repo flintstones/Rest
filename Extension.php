@@ -13,16 +13,19 @@ namespace Flintstones\Rest;
 
 use FOS\RestBundle\EventListener\BodyListener;
 use FOS\RestBundle\EventListener\FormatListener;
+use FOS\RestBundle\Util\FormatNegotiator;
+use FOS\RestBundle\Decoder\JsonDecoder;
+use FOS\RestBundle\Decoder\XmlDecoder;
 
 use Silex\Application;
-use Silex\ExtensionInterface;
+use Silex\ServiceProviderInterface;
 
 use Symfony\Component\HttpKernel\KernelEvents as HttpKernelEvents;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 
-class Extension implements ExtensionInterface
+class Extension implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
@@ -39,6 +42,23 @@ class Extension implements ExtensionInterface
             $app['rest.priorities'] = array('json', 'xml');
         }
 
+        $app['rest.format_negotiator'] = function ($app) {
+            return new FormatNegotiator($app['request'], $app['rest.priorities']);
+        };
+
+        $app['rest.decoder.json'] = function ($app) {
+            return new JsonDecoder();
+        };
+
+        $app['rest.decoder.xml'] = function ($app) {
+            return new XmlDecoder();
+        };
+
+        $app['rest.decoders'] = isset($app['rest.decoders']) ? $app['rest.decoders'] : array(
+            'json' => 'rest.decoder.json',
+            'xml' => 'rest.decoder.xml',
+        );
+
         if (isset($app['rest.fos.class_path'])) {
             $app['autoloader']->registerNamespace('FOS\RestBundle', $app['rest.fos.class_path']);
         }
@@ -47,12 +67,10 @@ class Extension implements ExtensionInterface
             $app['autoloader']->registerNamespace('Symfony\Component\Serializer', $app['rest.serializer.class_path']);
         }
 
-        $listener = new BodyListener($app['rest.serializer']);
+        $listener = new BodyListener(new PimpleDecoderProvider($app), $app['rest.decoders']);
         $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, array($listener, 'onKernelRequest'));
 
-        $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, function () use ($app) {
-            $listener = new FormatListener('html', $app['rest.priorities']);
-            $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, array($listener, 'onKernelController'), 10);
-        });
+        $listener = new FormatListener($app['rest.format_negotiator'], 'html', $app['rest.priorities']);
+        $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, array($listener, 'onKernelController'), 10);
     }
 }
