@@ -12,7 +12,7 @@
          bootstrap="Tests/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="Flintstones RestExtension Test Suite">
+        <testsuite name="Flintstones RestServiceProvider Test Suite">
             <directory>./Tests</directory>
         </testsuite>
     </testsuites>

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Flintstones RestExtension.
+ * This file is part of the Flintstones RestServiceProvider.
  *
  * (c) Igor Wiedler <igor@wiedler.ch>
  *
@@ -11,7 +11,7 @@
 
 namespace Flintstones\Rest\Tests;
 
-use Flintstones\Rest\Extension as RestExtension;
+use Flintstones\Rest\ServiceProvider as RestServiceProvider;
 
 use Silex\Application;
 
@@ -22,11 +22,11 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @author Igor Wiedler <igor@wiedler.ch>
  */
-class ExtensionTest extends \PHPUnit_Framework_TestCase
+class ServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!is_file(__DIR__.'/../vendor/FOS/RestBundle/FOSRestBundle.php')) {
+        if (!is_file(__DIR__.'/../../../../vendor/FOS/RestBundle/FOSRestBundle.php')) {
             $this->markTestSkipped('FOS\RestBundle submodule was not installed.');
         }
     }
@@ -35,9 +35,9 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $app = new Application();
 
-        $app->register(new RestExtension(), array(
-            'rest.fos.class_path'           => __DIR__.'/../vendor',
-            'rest.serializer.class_path'    => __DIR__.'/../vendor',
+        $app->register(new RestServiceProvider(), array(
+            'rest.fos.class_path'           => __DIR__.'/../../../../vendor',
+            'rest.serializer.class_path'    => __DIR__.'/../../../../vendor',
         ));
 
         $this->assertInstanceOf('Symfony\Component\Serializer\Serializer', $app['rest.serializer']);

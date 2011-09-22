@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Flintstones RestExtension.
+ * This file is part of the Flintstones RestServiceProvider.
  *
  * (c) Igor Wiedler <igor@wiedler.ch>
  *

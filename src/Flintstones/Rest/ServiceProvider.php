@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Flintstones RestExtension.
+ * This file is part of the Flintstones RestServiceProvider.
  *
  * (c) Igor Wiedler <igor@wiedler.ch>
  *
@@ -25,7 +25,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 
-class Extension implements ServiceProviderInterface
+class ServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {

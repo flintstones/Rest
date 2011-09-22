@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Flintstones RestExtension.
+ * This file is part of the Flintstones RestServiceProvider.
  *
  * (c) Igor Wiedler <igor@wiedler.ch>
  *
@@ -13,10 +13,7 @@ require_once __DIR__.'/../vendor/silex/autoload.php';
 
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 
-spl_autoload_register(function ($class) {
-    if (0 === strpos($class, 'Flintstones\\Rest\\')) {
-        $path = implode('/', array_slice(explode('\\', $class), 2)).'.php';
-        require_once __DIR__.'/../'.$path;
-        return true;
-    }
-});
+$loader = new UniversalClassLoader();
+$loader->registerNamespace('Flintstones\Rest', __DIR__.'/../src');
+$loader->registerNamespace('Flintstones\Tests\Rest', __DIR__);
+$loader->register();
