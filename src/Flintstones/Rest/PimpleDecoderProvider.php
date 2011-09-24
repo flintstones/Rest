@@ -17,13 +17,25 @@ class PimpleDecoderProvider implements DecoderProviderInterface
 {
     private $container;
 
-    public function __construct(\Pimple $container)
+    private $decoders;
+
+    public function __construct(\Pimple $container, array $decoders)
     {
         $this->container = $container;
+        $this->decoders = $decoders;
     }
 
-    public function getDecoder($id)
+    public function supports($format)
     {
-        return $this->container[$id];
+    	return isset($this->container[$this->decoders[$format]]);
+    }
+
+    public function getDecoder($format)
+    {
+    	if (!$this->supports($format)) {
+    		throw new \InvalidArgumentException(sprintf("Format '%s' is not supported by PimpleDecoderProvider.", $format));
+    	}
+
+        return $this->container[$this->decoders[$format]];
     }
 }

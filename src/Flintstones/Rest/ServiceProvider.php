@@ -55,8 +55,8 @@ class ServiceProvider implements ServiceProviderInterface
         };
 
         $app['rest.decoders'] = isset($app['rest.decoders']) ? $app['rest.decoders'] : array(
-            'json' => 'rest.decoder.json',
-            'xml' => 'rest.decoder.xml',
+            'json'  => 'rest.decoder.json',
+            'xml'   => 'rest.decoder.xml',
         );
 
         if (isset($app['rest.fos.class_path'])) {
@@ -67,7 +67,7 @@ class ServiceProvider implements ServiceProviderInterface
             $app['autoloader']->registerNamespace('Symfony\Component\Serializer', $app['rest.serializer.class_path']);
         }
 
-        $listener = new BodyListener(new PimpleDecoderProvider($app), $app['rest.decoders']);
+        $listener = new BodyListener(new PimpleDecoderProvider($app, $app['rest.decoders']));
         $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, array($listener, 'onKernelRequest'));
 
         $listener = new FormatListener($app['rest.format_negotiator'], 'html', $app['rest.priorities']);

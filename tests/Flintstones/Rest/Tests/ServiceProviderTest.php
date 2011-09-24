@@ -16,6 +16,7 @@ use Flintstones\Rest\ServiceProvider as RestServiceProvider;
 use Silex\Application;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * RestExtension test cases.
@@ -56,7 +57,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         $request = Request::create('/api/user/1', 'put', array(), array(), array(), array(), '{"name":"igor"}');
         $request->headers->set('Content-Type', 'application/json');
-        $response = $app->handle($request);
+        $response = $app->handle($request, HttpKernelInterface::MASTER_REQUEST, false);
 
         $this->assertEquals('igor', $response->getContent());
     }
@@ -72,7 +73,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         $request = Request::create('/api/user/1');
         $request->headers->set('Accept', 'application/json');
-        $response = $app->handle($request);
+        $response = $app->handle($request, HttpKernelInterface::MASTER_REQUEST, false);
 
         $this->assertEquals('json', $response->getContent());
     }
