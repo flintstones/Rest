@@ -27,5 +27,5 @@ You get accept header support and request body decoding.
 The RestServiceProvider is licensed under the MIT license.
 
 [1]: http://silex-project.org
-[2]: https://github.com/FriendsOfSymfony/RestBundle
+[2]: https://github.com/FriendsOfSymfony/FOSRestBundle
 [3]: https://github.com/symfony/Serializer
