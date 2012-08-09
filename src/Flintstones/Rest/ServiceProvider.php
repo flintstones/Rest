@@ -13,9 +13,9 @@ namespace Flintstones\Rest;
 
 use FOS\RestBundle\EventListener\BodyListener;
 use FOS\RestBundle\EventListener\FormatListener;
-use FOS\RestBundle\Util\FormatNegotiator;
-use FOS\RestBundle\Decoder\JsonDecoder;
-use FOS\RestBundle\Decoder\XmlDecoder;
+use FOS\Rest\Util\FormatNegotiator;
+use FOS\Rest\Decoder\JsonDecoder;
+use FOS\Rest\Decoder\XmlDecoder;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -73,4 +73,15 @@ class ServiceProvider implements ServiceProviderInterface
         $listener = new FormatListener($app['rest.format_negotiator'], 'html', $app['rest.priorities']);
         $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, array($listener, 'onKernelController'), 10);
     }
+
+  /**
+   * Bootstraps the application.
+   *
+   * This method is called after all services are registers
+   * and should be used for "dynamic" configuration (whenever
+   * a service must be requested).
+   */
+  public function boot(Application $app) {
+    // TODO: Implement boot() method.
+  }
 }
