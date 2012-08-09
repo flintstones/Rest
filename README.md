@@ -14,7 +14,8 @@ You get accept header support and request body decoding.
 
 ## Running the tests
 
-    $ ./vendors.sh
+    $ curl -s https://getcomposer.org/installer | php
+    $ php composer.phar install
     $ phpunit
 
 ## Credits

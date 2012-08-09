@@ -27,7 +27,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!is_file(__DIR__.'/../../../../vendor/FOS/RestBundle/FOSRestBundle.php')) {
+        if (!is_file(__DIR__.'/../../../../vendor/friendsofsymfony/rest-bundle/FOS/RestBundle/FOSRestBundle.php')) {
             $this->markTestSkipped('FOS\RestBundle submodule was not installed.');
         }
     }

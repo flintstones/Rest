@@ -11,7 +11,7 @@
 
 namespace Flintstones\Rest;
 
-use FOS\RestBundle\DecoderProvider\DecoderProviderInterface;
+use FOS\Rest\Decoder\DecoderProviderInterface;
 
 class PimpleDecoderProvider implements DecoderProviderInterface
 {
