@@ -1,0 +1,9 @@
+{
+  "require": {
+    "friendsofsymfony/rest-bundle": "*",
+    "symfony/serializer": "2.1.x",
+    "silex/silex": "1.0.*",
+    "symfony/class-loader": "2.1.x"
+  },
+  "minimum-stability": "dev"
+}
