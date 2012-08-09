@@ -1,20 +1,21 @@
 {
-  "name": "flintstones/rest",
-  "description": "Adding some REST capabilities to [Silex][1], so you can more easily build RESTful APIs. 110% Buzzword-Driven.",
-  "keywords": ["rest","silex"],
-  "authors": [
-    {
-      "name": "Igor Wiedler"
-    }
-  ],
-
-  "require": {
-    "friendsofsymfony/rest-bundle": "*",
-    "symfony/serializer": "2.1.x",
-    "silex/silex": "1.0.*",
-    "symfony/class-loader": "2.1.x"
-  },
-
-  "minimum-stability": "dev"
-
+    "name": "flintstones/rest",
+    "description": "Adding some REST capabilities to Silex, so you can more easily build RESTful APIs. 110% Buzzword-Driven.",
+    "keywords": ["rest", "silex"],
+    "authors": [
+        {
+            "name": "Igor Wiedler",
+            "email": "igor@wiedler.ch"
+        }
+    ],
+    "require": {
+        "friendsofsymfony/rest-bundle": "*",
+        "symfony/serializer": "2.1.x",
+        "silex/silex": "1.0.*"
+    },
+    "autoload": {
+        "psr-0": { "Flintstones": "src" }
+    },
+    "target-dir": "Flintstones/Rest",
+    "minimum-stability": "dev"
 }
