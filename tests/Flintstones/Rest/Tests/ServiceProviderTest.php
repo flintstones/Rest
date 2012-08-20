@@ -77,4 +77,31 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('json', $response->getContent());
     }
+
+    /**
+     * @depends testRegister
+     * @dataProvider responseHeaderProvider
+     */
+    public function testFormatNegotiator($responseHeader, Application $app)
+    {
+        $app->get('/api/user/{id}', function ($id) use ($app) {
+          return $app['rest.format_negotiator']->getBestFormat($app['request'], $app['rest.priorities']);
+        });
+
+        $request = Request::create('/api/user/1');
+        $request->headers->set('Accept', 'application/' . $responseHeader);
+        $response = $app->handle($request, HttpKernelInterface::MASTER_REQUEST, false);
+
+        $this->assertEquals($responseHeader, $response->getContent());
+    }
+
+    /**
+     * @return array
+     */
+    public function responseHeaderProvider() {
+        return array(
+          array("json"),
+          array("xml")
+        );
+    }
 }
