@@ -43,7 +43,7 @@ class ServiceProvider implements ServiceProviderInterface
         }
 
         $app['rest.format_negotiator'] = function ($app) {
-            return new FormatNegotiator($app['request'], $app['rest.priorities']);
+            return new FormatNegotiator();
         };
 
         $app['rest.decoder.json'] = function ($app) {
