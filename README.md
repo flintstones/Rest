@@ -7,10 +7,7 @@ You get accept header support and request body decoding.
 
 ## Registering
 
-    $app->register(new Flintstones\Rest\ServiceProvider(), array(
-        'rest.fos.class_path'           => __DIR__.'/vendor',
-        'rest.serializer.class_path'    => __DIR__.'/vendor',
-    ));
+    $app->register(new Flintstones\Rest\ServiceProvider());
 
 ## Running the tests
 

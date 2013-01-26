@@ -59,14 +59,6 @@ class ServiceProvider implements ServiceProviderInterface
             'xml'   => 'rest.decoder.xml',
         );
 
-        if (isset($app['rest.fos.class_path'])) {
-            $app['autoloader']->registerNamespace('FOS\RestBundle', $app['rest.fos.class_path']);
-        }
-
-        if (isset($app['rest.serializer.class_path'])) {
-            $app['autoloader']->registerNamespace('Symfony\Component\Serializer', $app['rest.serializer.class_path']);
-        }
-
         $listener = new BodyListener(new PimpleDecoderProvider($app, $app['rest.decoders']));
         $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, array($listener, 'onKernelRequest'));
 
