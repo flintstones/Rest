@@ -42,8 +42,12 @@ class ServiceProvider implements ServiceProviderInterface
             $app['rest.priorities'] = array('json', 'xml');
         }
 
+        if (!isset($app['rest.fallback'])) {
+            $app['rest.fallback'] = 'html';
+        }
+
         $app['rest.format_negotiator'] = function ($app) {
-            return new FormatNegotiator($app['request'], $app['rest.priorities']);
+            return new FormatNegotiator();
         };
 
         $app['rest.decoder.json'] = function ($app) {
@@ -59,29 +63,13 @@ class ServiceProvider implements ServiceProviderInterface
             'xml'   => 'rest.decoder.xml',
         );
 
-        if (isset($app['rest.fos.class_path'])) {
-            $app['autoloader']->registerNamespace('FOS\RestBundle', $app['rest.fos.class_path']);
-        }
-
-        if (isset($app['rest.serializer.class_path'])) {
-            $app['autoloader']->registerNamespace('Symfony\Component\Serializer', $app['rest.serializer.class_path']);
-        }
-
         $listener = new BodyListener(new PimpleDecoderProvider($app, $app['rest.decoders']));
         $app['dispatcher']->addListener(HttpKernelEvents::REQUEST, array($listener, 'onKernelRequest'));
 
-        $listener = new FormatListener($app['rest.format_negotiator'], 'html', $app['rest.priorities']);
+        $listener = new FormatListener($app['rest.format_negotiator'], $app['rest.fallback'], $app['rest.priorities']);
         $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, array($listener, 'onKernelController'), 10);
     }
-
-  /**
-   * Bootstraps the application.
-   *
-   * This method is called after all services are registers
-   * and should be used for "dynamic" configuration (whenever
-   * a service must be requested).
-   */
-  public function boot(Application $app) {
-    // TODO: Implement boot() method.
-  }
+    
+    public function boot(Application $app) {
+    }
 }
