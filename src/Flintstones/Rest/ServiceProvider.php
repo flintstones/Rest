@@ -27,8 +27,19 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 
 class ServiceProvider implements ServiceProviderInterface
 {
+    private $parameters = array();
+    
+    public function __construct(array $parameters = array())
+    {
+        $this->parameters = $parameters;
+    }
+    
     public function register(Application $app)
     {
+        foreach ($this->parameters as $key => $parameter) {
+            $app[$key] = $parameter;
+        }
+        
         $app['rest.serializer'] = $app->share(function () {
             $encoders = array (
                 'json' => new JsonEncoder(),
