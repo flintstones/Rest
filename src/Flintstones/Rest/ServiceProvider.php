@@ -65,15 +65,7 @@ class ServiceProvider implements ServiceProviderInterface
         $listener = new FormatListener($app['rest.format_negotiator'], 'html', $app['rest.priorities']);
         $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, array($listener, 'onKernelController'), 10);
     }
-
-  /**
-   * Bootstraps the application.
-   *
-   * This method is called after all services are registers
-   * and should be used for "dynamic" configuration (whenever
-   * a service must be requested).
-   */
-  public function boot(Application $app) {
-    // TODO: Implement boot() method.
-  }
+    
+    public function boot(Application $app) {
+    }
 }
