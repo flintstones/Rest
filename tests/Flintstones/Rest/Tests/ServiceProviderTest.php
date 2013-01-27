@@ -36,10 +36,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = new Application();
 
-        $app->register(new RestServiceProvider(), array(
-            'rest.fos.class_path'           => __DIR__.'/../../../../vendor',
-            'rest.serializer.class_path'    => __DIR__.'/../../../../vendor',
-        ));
+        $app->register(new RestServiceProvider());
 
         $this->assertInstanceOf('Symfony\Component\Serializer\Serializer', $app['rest.serializer']);
 
