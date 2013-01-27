@@ -66,6 +66,7 @@ class ServiceProvider implements ServiceProviderInterface
         $app['dispatcher']->addListener(HttpKernelEvents::CONTROLLER, array($listener, 'onKernelController'), 10);
     }
     
-    public function boot(Application $app) {
+    public function boot(Application $app)
+    {
     }
 }
