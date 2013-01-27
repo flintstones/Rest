@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 /**
  * Test format listener determins correct response
  *
- * @author Igor Wiedler <igor@wiedler.ch>
+ * @author Lyndon Brown <lrebrown@gmail.com>
  */
 class ServiceProviderResponseFormatTest extends \PHPUnit_Framework_TestCase
 {
