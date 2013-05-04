@@ -2,6 +2,7 @@
     "name": "flintstones/rest",
     "description": "Adding some REST capabilities to Silex, so you can more easily build RESTful APIs. 110% Buzzword-Driven.",
     "keywords": ["rest", "silex"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Igor Wiedler",
